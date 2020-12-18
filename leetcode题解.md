@@ -3125,6 +3125,76 @@ class Solution {
 }
 ```
 
+#### 74 搜索二维矩阵
+
+```
+编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：
+
+每行中的整数从左到右按升序排列。
+每行的第一个整数大于前一行的最后一个整数。
+ 
+
+示例 1：
+
+
+输入：matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,50]], target = 3
+输出：true
+示例 2：
+
+
+输入：matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,50]], target = 13
+输出：false
+示例 3：
+
+输入：matrix = [], target = 0
+输出：false
+ 
+
+提示：
+
+m == matrix.length
+n == matrix[i].length
+0 <= m, n <= 100
+-104 <= matrix[i][j], target <= 104
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/search-a-2d-matrix
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：第一反应就是二分查找，从下标找到规律，我们虚拟出来一个一维数组，对于在这个一维数组中的索引位置idx
+
+​			对于二维矩阵中满足 i = idx / n   j = idx % n
+
+​			剩下的就是正常的二分查找了
+
+```java
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        //二分查找，我们虚拟出来一个一维数组，对于在这个一维数组中的索引位置idx
+        //对于二维矩阵中满足 i = idx / n   j = idx % n
+        int row = matrix.length;
+        if(row == 0)    return false;
+        int col = matrix[0].length;
+        int left = 0;
+        int right = row * col - 1;
+        while(left <= right){
+            int middle = (left + right) / 2;
+            int num = matrix[middle / col][middle % col];
+            if(num > target){
+                right = middle - 1;
+            }
+            else if(num < target){
+                left = middle + 1;
+            }else{
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
 ## 链表
 
 #### 61 旋转链表
@@ -5388,6 +5458,169 @@ class Solution {
     }
 }
 ```
+
+#### 73 矩阵置零
+
+```
+给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
+
+示例 1:
+
+输入: 
+[
+  [1,1,1],
+  [1,0,1],
+  [1,1,1]
+]
+输出: 
+[
+  [1,0,1],
+  [0,0,0],
+  [1,0,1]
+]
+示例 2:
+
+输入: 
+[
+  [0,1,2,0],
+  [3,4,5,2],
+  [1,3,1,5]
+]
+输出: 
+[
+  [0,0,0,0],
+  [0,4,5,0],
+  [0,3,1,0]
+]
+进阶:
+
+一个直接的解决方案是使用  O(mn) 的额外空间，但这并不是一个好的解决方案。
+一个简单的改进方案是使用 O(m + n) 的额外空间，但这仍然不是最好的解决方案。
+你能想出一个常数空间的解决方案吗？
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/set-matrix-zeroes
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路1：相当于一个简单的floodfill，为了练习这个先写了一个dfs递归,但是也要先用一个source矩阵标识这个矩阵是否是原始0
+
+```java
+class Solution {
+    private int[][] directions = new int[][]{{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    private int row;
+    private int col;
+    private int[][] matrix;
+    private boolean[][] source;
+    public void setZeroes(int[][] matrix) {
+        this.row = matrix.length;
+        if(row == 0) return;
+        this.col = matrix[0].length;
+        this.matrix = matrix;
+        source = new boolean[row][col];
+        for(int i = 0;i < row;i++){
+            for(int j = 0;j < col;j++){
+                if(matrix[i][j] == 0)
+                    source[i][j] = true;
+            }
+        }
+        for(int i = 0;i < row;i++){
+            for(int j = 0;j < col;j++){
+                if(source[i][j] && matrix[i][j] == 0)
+                    extend(i, j, true, 0);
+            }
+        }
+        return;
+    }
+
+    public void extend(int i, int j, boolean isSource, int dire){
+        matrix[i][j] = 0;
+        if(isSource){
+            for(int k = 0;k < 4;k++){
+                int newX = i + directions[k][0];
+                int newY = j + directions[k][1];
+                if(inArea(newX, newY))
+                    extend(newX, newY, false, k);
+            }
+        }
+        else{
+            int newX = i + directions[dire][0];
+            int newY = j + directions[dire][1];
+            if(inArea(newX, newY))
+                extend(newX, newY, false, dire);
+        }
+    }
+
+    public boolean inArea(int i, int j){
+        return (i >= 0 && i < row && j >= 0 && j < col);
+    }
+}
+```
+
+思路2：用第一行和第一列分别标记对应列或者对应行有没有0，即有原始0就更新对应得第一行上和第一列的值，但是要注意第一行和第一列本身就有0的情况，详见注释
+
+```java
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int row = matrix.length;
+        if(row == 0)    return;
+        int col = matrix[0].length;
+        boolean has0InfirstCol = false;
+        boolean has0InfirstRow = false;
+        //先遍历第一行
+        for(int j = 0;j < col;j++){
+            if(matrix[0][j] == 0){
+                has0InfirstRow = true;
+                break;
+            }
+        }
+        //遍历第一列
+        for(int i = 0;i < row;i++){
+            if(matrix[i][0] == 0){
+                has0InfirstCol = true;
+                break;
+            }
+        }
+        //把矩阵第一行和第一列作为索引
+        //注意要从（1，1）开始遍历
+        for(int i = 1;i < row;i++){
+            for(int j = 1;j < col;j++){
+                if(matrix[i][j] == 0){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        //遍历第一行并且更改值
+        for(int j = 1;j < col;j++){
+            if(matrix[0][j] == 0){
+                for(int i = 0;i < row;i++)
+                    matrix[i][j] = 0;
+            }
+        }
+        //遍历第一列并且更改值
+        for(int i = 1;i < row;i++){
+            if(matrix[i][0] == 0){
+                for(int j = 0;j < col;j++)
+                    matrix[i][j] = 0;
+            }
+        }
+        //处理第一行和第一列的特殊情况
+        if(has0InfirstRow){
+            for(int j = 0;j < col;j++)
+                matrix[0][j] = 0;
+        }
+        if(has0InfirstCol){
+            for(int i = 0;i < row;i++)
+                matrix[i][0] = 0;
+        }
+    }
+}
+```
+
+
+
+
 
 ## SQL
 
