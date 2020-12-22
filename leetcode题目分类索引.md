@@ -107,9 +107,9 @@
 | [120. 三角形最小路径和](https://leetcode-cn.com/problems/triangle/) | 2020-12-11 |  ✅🔵  |       ⚡一次AC        |
 | [面试题 01.05. 一次编辑](https://leetcode-cn.com/problems/one-away-lcci/) | 2020-12-12 |  ❓🔵  |          ⚡           |
 | [91. 解码方法](https://leetcode-cn.com/problems/decode-ways/) | 2020-12-16 |  ❌🔵  |          ⚡           |
-|                                                              |            |      |                      |
-|                                                              |            |      |                      |
-|                                                              |            |      |                      |
+| [801. 使序列递增的最小交换次数](https://leetcode-cn.com/problems/minimum-swaps-to-make-sequences-increasing/) | 2020-12-19 | ❌🔵⭐  |       ⚡有难度        |
+| [131. 分割回文串](https://leetcode-cn.com/problems/palindrome-partitioning/) | 2020-12-22 | ❓🔵⭐  |   ⚡用DP来优化回溯    |
+| [279. 完全平方数](https://leetcode-cn.com/problems/perfect-squares/) | 2020-12-22 |  ✅🔵  |    ⚡应该有更优解     |
 |                                                              |            |      |                      |
 |                                                              |            |      |                      |
 |                                                              |            |      |                      |
@@ -197,7 +197,7 @@
 | [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/) | 2020-12-16 |  ✅🔵  |      ⚡       |
 | [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/) | 2020-12-17 |  ❓🔵  |    ⚡妙啊     |
 | [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/) | 2020-12-18 |  ✅🔵  |    ⚡妙啊     |
-|                                                              |            |      |              |
+| [1664. 生成平衡数组的方案数](https://leetcode-cn.com/problems/ways-to-make-a-fair-array/) | 2020-12-21 | ❌🔵⭐  | ⚡前缀和问题  |
 |                                                              |            |      |              |
 |                                                              |            |      |              |
 

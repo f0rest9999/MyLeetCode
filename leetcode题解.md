@@ -2086,6 +2086,196 @@ class Solution {
 }
 ```
 
+#### 801 使序列递增的最小交换次数
+
+```
+我们有两个长度相等且不为空的整型数组 A 和 B 。
+
+我们可以交换 A[i] 和 B[i] 的元素。注意这两个元素在各自的序列中应该处于相同的位置。
+
+在交换过一些元素之后，数组 A 和 B 都应该是严格递增的（数组严格递增的条件仅为A[0] < A[1] < A[2] < ... < A[A.length - 1]）。
+
+给定数组 A 和 B ，请返回使得两个数组均保持严格递增状态的最小交换次数。假设给定的输入总是有效的。
+
+示例:
+输入: A = [1,3,5,4], B = [1,2,3,7]
+输出: 1
+解释: 
+交换 A[3] 和 B[3] 后，两个数组如下:
+A = [1, 3, 5, 7] ， B = [1, 2, 3, 4]
+两个数组均为严格递增的。
+注意:
+
+A, B 两个数组的长度总是相等的，且长度的范围为 [1, 1000]。
+A[i], B[i] 均为 [0, 2000]区间内的整数。
+```
+
+思路：==注意题目中假定给定的输入总是有效的，也就是说如果在一个序列中不满足增，那么交换该位置之后必然满足两个序列都增==
+
+我们用两个数组来表示，dp的第一列表示在i位置不换的时候，到目前为止最少交换次数，dp的第二列表示在i位置换的时候的最少交换次数
+
+![图画题解-12](https://gitee.com/f0rest9999/images/raw/master/20201219154742.jpg)
+
+```java
+class Solution {
+    public int minSwap(int[] A, int[] B) {
+        int[][] dp = new int[A.length][2];
+        //第一列表示不换
+        dp[0][0] = 0;
+        //第二列表示换
+        dp[0][1] = 1;
+        for(int i  = 1;i < A.length;i++){
+            //有序
+            if(A[i] > A[i - 1] && B[i] > B[i - 1]){
+                //有交叉
+                if(A[i] > B[i - 1] && B[i] > A[i - 1]){
+                    //在i不换
+                    dp[i][0] = Math.min(dp[i - 1][0], dp[i - 1][1]);
+                    //在i换
+                    dp[i][1] = Math.min(dp[i - 1][0], dp[i - 1][1]) + 1;
+                }else{
+                    dp[i][0] = dp[i - 1][0];
+                    dp[i][1] = dp[i - 1][1] + 1;
+                }
+            }else{
+                //无序必须换了 
+                //要么换i 要么换i - 1
+                dp[i][0] = dp[i - 1][1];
+                dp[i][1] = dp[i - 1][0] + 1;
+            }
+        }
+        return Math.min(dp[A.length - 1][0], dp[A.length - 1][1]);
+    }
+}
+```
+
+#### 131 分割回文串
+
+```
+给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
+
+返回 s 所有可能的分割方案。
+
+示例:
+
+输入: "aab"
+输出:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/palindrome-partitioning
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：这题是较好的动态规划和回溯结合的题，主要思路是回溯遍历所有可以剪切的位置，如果每一步都剪切成功，最后加入结果，如果有一步没有剪切，成功则完成剪枝，该分支不用再计算
+
+先用动态规划计算好dp，dp（i， j）表示s中i到j的子字符串是否是回文的，这样我们在回溯过程中，只用O（1）的时间来找到其是否满足回文，参考[5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+
+再每次回溯的过程中，我们定义一个start，表示开始截取的位置，然后循环遍历所有可以遍历的位置，前提是dp中该对应值为true
+
+```java
+class Solution {
+    //动态规划优化 + 回溯
+    //思路是正确的
+    private List<List<String>> resList = new ArrayList<>();
+    private boolean[][] dp;
+    public List<List<String>> partition(String s) {
+        int len = s.length();
+        if(len == 0)    return resList;
+        dp = new boolean [len][len];
+        for(int i = 0;i < len;i++)
+            dp[i][i] = true;
+        for(int j = 1;j < len;j++){
+            for(int i = 0;i < j;i++){
+                if(s.charAt(i) != s.charAt(j))
+                    continue;
+                else{
+                    if(j - i < 3)
+                        dp[i][j] = true;
+                    else
+                        dp[i][j] = dp[i + 1][j - 1];
+                }
+            }
+        }
+        Deque<String> path = new ArrayDeque<>();
+        dfs(s, path, 0, len);
+        return resList;
+    }
+    public void dfs(String s, Deque<String> path, int start, int len){
+        if(start == len){
+            resList.add(new ArrayList<String>(path));
+            return ;
+        }
+        for(int i = start;i < len;i++){
+            if(!dp[start][i])
+                continue;
+            path.addLast(s.substring(start, i + 1));
+            dfs(s, path, i + 1, len);
+            path.removeLast();
+        }
+    }
+}
+```
+
+#### 279 完全平方数
+
+```
+给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
+
+示例 1:
+
+输入: n = 12
+输出: 3 
+解释: 12 = 4 + 4 + 4.
+示例 2:
+
+输入: n = 13
+输出: 2
+解释: 13 = 4 + 9.
+```
+
+思路：这个题可以特殊处理
+
+- 我们用一个list来按顺序存储所有小于n的平方数，最开始里面只有一个1
+- 其次我们用dp[i]表示i最少可以用几个平方数构成,其中所有平方数的dp[i]初始化为1
+- 从2开始，对于不是平方数的值，我们遍历list，来找到最小的dp[j] + dp[i - j]，代表着一个数是平方数，另一个数是i - j所代表的差值，这个在之前已经计算过了。（这里特殊利用了数组是升序的性质）
+- 对于是平方数的值，我们加入list，并且continue
+
+```java
+class Solution {
+    public int numSquares(int n) {
+        if(n <= 1) return 1;
+        List<Integer> list = new LinkedList<>();
+        list.add(1);
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        for(int i = 1;i * i <= n;i++)
+            dp[i * i] = 1;
+        for(int i = 2;i <= n;i++){
+            if(dp[i] == 1){
+                list.add(i);
+                continue;
+            }
+            for(int j : list){
+                dp[i] = Math.min(dp[i], dp[j] + dp[i - j]);
+            }
+        }
+        return dp[n]; 
+    }
+}
+```
+
+Test：13
+
+index:           0           1 2 3 4 5 6 7 8 9 10  11  12  13
+
+结果：2147483647 1 2 3 1 2 3 4 2  1   2   3    3    2 
+
+
+
 
 
 ## 二叉树
@@ -5614,6 +5804,92 @@ class Solution {
             for(int i = 0;i < row;i++)
                 matrix[i][0] = 0;
         }
+    }
+}
+```
+
+#### 1664 生成平衡数组的方案数
+
+```
+给你一个整数数组 nums 。你需要选择 恰好 一个下标（下标从 0 开始）并删除对应的元素。请注意剩下元素的下标可能会因为删除操作而发生改变。
+
+比方说，如果 nums = [6,1,7,4,1] ，那么：
+
+选择删除下标 1 ，剩下的数组为 nums = [6,7,4,1] 。
+选择删除下标 2 ，剩下的数组为 nums = [6,1,4,1] 。
+选择删除下标 4 ，剩下的数组为 nums = [6,1,7,4] 。
+如果一个数组满足奇数下标元素的和与偶数下标元素的和相等，该数组就是一个 平衡数组 。
+
+请你返回删除操作后，剩下的数组 nums 是 平衡数组 的 方案数 。
+
+示例 1：
+输入：nums = [2,1,6,4]
+输出：1
+解释：
+删除下标 0 ：[1,6,4] -> 偶数元素下标为：1 + 4 = 5 。奇数元素下标为：6 。不平衡。
+删除下标 1 ：[2,6,4] -> 偶数元素下标为：2 + 4 = 6 。奇数元素下标为：6 。平衡。
+删除下标 2 ：[2,1,4] -> 偶数元素下标为：2 + 4 = 6 。奇数元素下标为：1 。不平衡。
+删除下标 3 ：[2,1,6] -> 偶数元素下标为：2 + 6 = 8 。奇数元素下标为：1 。不平衡。
+只有一种让剩余数组成为平衡数组的方案。
+示例 2：
+
+输入：nums = [1,1,1]
+输出：3
+解释：你可以删除任意元素，剩余数组都是平衡数组。
+示例 3：
+
+输入：nums = [1,2,3]
+输出：0
+解释：不管删除哪个元素，剩下数组都不是平衡数组。
+ 
+提示：
+1 <= nums.length <= 105
+1 <= nums[i] <= 104
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/ways-to-make-a-fair-array
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：对于每一个删除方案，我们只要计算左边的所有偶数位加上右边的所有偶数位 是否 等于 左边所有奇数位加上右边所有奇数位
+
+所以我们先用两个数组存储所有偶数位和奇数位的和（小DP）,每删除一个元素，它右边的所有奇数位变成偶数位，偶数位变奇数位
+
+所以我们必须交换一下这两个的值
+
+```java
+class Solution {
+    public int waysToMakeFair(int[] nums) {
+        int len = nums.length;
+        //到目前为止奇数下标位置的和
+    	int[] oddSum = new int[len];    
+        //到目前为止偶数下标位置的和
+    	int[] evenSum = new int[len];
+        evenSum[0] = nums[0];
+    	for(int i = 1;i < len;i++){
+            if(i % 2 == 0){
+                evenSum[i] = evenSum[i - 1] + nums[i];
+                oddSum[i] = oddSum[i - 1];
+            }else{
+                oddSum[i] = oddSum[i - 1] + nums[i];
+                evenSum[i] = evenSum[i - 1];
+            }
+        }
+    	int res = 0;
+        for(int i = 0;i < len;i++){
+            int left_odd = i >= 1 ? oddSum[i - 1] : 0;
+            int left_even = i >= 1 ? evenSum[i - 1] : 0;
+            int right_odd = oddSum[len - 1] - oddSum[i];
+            int right_even = evenSum[len - 1] - evenSum[i];
+            
+            int temp = right_odd;
+            right_odd = right_even;
+            right_even = temp;
+            
+            if(right_odd + left_odd == right_even + left_even)
+                res ++;
+        }
+        return res;
     }
 }
 ```
