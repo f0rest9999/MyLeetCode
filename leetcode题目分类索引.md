@@ -240,22 +240,23 @@
 
 ### 位运算
 
-|                             题目                             | 日期 | 状态 | 备注 |
-| :----------------------------------------------------------: | :--: | :--: | :--: |
-| [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/) |      |  ⚪   | 没做 |
-| [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/) |      |  🔵   | 没做 |
-| [169. 多数元素](https://leetcode-cn.com/problems/majority-element/) |      |  ⚪   | 没做 |
-| [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/) |      |  ⚪   | 没做 |
-| [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/) |      |  ⚪   | 没做 |
-| [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/) |      |  🔵   | 没做 |
-| [268. 丢失的数字](https://leetcode-cn.com/problems/missing-number/) |      |  ⚪   | 没做 |
-| [342. 4的幂](https://leetcode-cn.com/problems/power-of-four/) |      |  ⚪   | 没做 |
-| [389. 找不同](https://leetcode-cn.com/problems/find-the-difference/) |      |  ⚪   | 没做 |
-| [461. 汉明距离](https://leetcode-cn.com/problems/hamming-distance/) |      |  ⚪   | 没做 |
-| [476. 数字的补数](https://leetcode-cn.com/problems/number-complement/) |      |  ⚪   | 没做 |
-| [693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/) |      |  ⚪   | 没做 |
-| [1342. 将数字变成 0 的操作次数](https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero/) |      |  ⚪   | 没做 |
-| [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/) |      |  ⚪   | 没做 |
-| [剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/) |      |  ⚪   | 没做 |
-| [面试题 17.04. 消失的数字](https://leetcode-cn.com/problems/missing-number-lcci/) |      |  ⚪   | 没做 |
+|                             题目                             | 日期  | 状态 |       备注       |
+| :----------------------------------------------------------: | :---: | :--: | :--------------: |
+| [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/) | 12-23 |  ✅⚪  |                  |
+| [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/) | 12-23 |  ❌🔵  |  没看太懂......  |
+| [169. 多数元素](https://leetcode-cn.com/problems/majority-element/) | 12-23 |  ❓⚪  |   摩尔投票法⭐    |
+| [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/) | 12-23 |  ✅⚪  |                  |
+| [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/) | 12-23 |  ✅⚪  |                  |
+| [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/) | 12-23 |  ❓🔵  |                  |
+| [268. 丢失的数字](https://leetcode-cn.com/problems/missing-number/) | 12-23 |  ❓⚪  |       秒啊       |
+| [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/) | 12-23 |  ❓⚪  |        ⭐         |
+| [342. 4的幂](https://leetcode-cn.com/problems/power-of-four/) | 12-23 |  ❓⚪  |       秒啊       |
+| [389. 找不同](https://leetcode-cn.com/problems/find-the-difference/) | 12-23 |  ✅⚪  | char类型也可以用 |
+| [461. 汉明距离](https://leetcode-cn.com/problems/hamming-distance/) | 12-23 |  ⚪   |       没做       |
+| [476. 数字的补数](https://leetcode-cn.com/problems/number-complement/) | 12-23 |  ⚪   |       没做       |
+| [693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/) | 12-23 |  ⚪   |       没做       |
+| [1342. 将数字变成 0 的操作次数](https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero/) | 12-23 |  ⚪   |       没做       |
+| [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/) | 12-23 |  ⚪   |       没做       |
+| [剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/) | 12-23 |  ⚪   |       没做       |
+| [面试题 17.04. 消失的数字](https://leetcode-cn.com/problems/missing-number-lcci/) | 12-23 |  ⚪   |       没做       |
 
