@@ -5390,9 +5390,266 @@ class Solution {
 }
 ```
 
+## 字符串
+
+#### 28 实现strStr()
+
+```
+实现 strStr() 函数。
+
+给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
+
+示例 1:
+
+输入: haystack = "hello", needle = "ll"
+输出: 2
+示例 2:
+
+输入: haystack = "aaaaa", needle = "bba"
+输出: -1
+说明:
+
+当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+
+对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
+```
+
+思路1：朴素算法
+
+​              纯粹的一个个遍历比较，类似于双指针
+
+```java
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        if(len2 == 0)   return 0;
+        if(len1 < len2) return -1;
+        for(int i = 0;i < len1 - len2 + 1;i++){
+            if(haystack.charAt(i) == needle.charAt(0)){
+                int k = i;
+                int j = 0;
+                while(j < len2){
+                    if(haystack.charAt(k) != needle.charAt(j))
+                        break;
+                    j ++;
+                    k ++;
+                }
+                if(j == len2)
+                    return i;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+==**KMP算法完整版**==
+
+（参考==《算法导论》==P588以及https://www.bilibili.com/video/BV1Ys411d7yh?t=767）
+
+KMP返回的是是否能找到匹配项
+
+```java
+class Solution {
+    public static void main(String[] args) {
+        String str = "abcxabcdabcdabcy";
+        String subString = "abcdabcy";
+        System.out.println(KMP(str.toCharArray(), subString.toCharArray()));
+    }
+
+    private static int[] computeTemporaryArray(char[] pattern){
+        int[] pai = new int[pattern.length];
+        int index = 0;
+        pai[index] = 0;
+        for(int i = 1;i < pai.length;){
+            if(pattern[index] == pattern[i]){
+                pai[i] = index + 1;
+                index ++;
+                i++;
+            }else{
+                if(index != 0){
+                    index = pai[index - 1];
+                }else{
+                    pai[i] = 0;
+                    i ++;
+                }
+            }
+        }
+//        System.out.println("index");
+//        for (int i = 0; i < pai.length; i++) {
+//            System.out.print(i + "  ");
+//        }
+//        System.out.println();
+//        System.out.println("pattern");
+//        for (char c : pattern) {
+//            System.out.print(c + "  ");
+//        }
+//        System.out.println();
+//        System.out.println("pai");
+//        for (int i : pai) {
+//            System.out.print(i + "  ");
+//        }
+//        System.out.println();
+        return pai;
+    }
+	//KMP
+    private static boolean KMP(char[] text, char[] pattern){
+        int[] pai = computeTemporaryArray(pattern);
+        int i = 0;
+        int j = 0;
+        while(i < text.length && j < pattern.length){
+            if(text[i] == pattern[j]){
+                i++;
+                j++;
+            }else{
+                if(j != 0){
+                    j = pai[j - 1];
+                }else{
+                    i ++;
+                }
+            }
+        }
+        if(j == pattern.length)
+            return true;
+        return false;
+    }
+}
+```
+
+==pai数组的结果以及计算过程==
+
+![image-20201223144050521](https://gitee.com/f0rest9999/images/raw/master/20201223144057.png)
+
+![图画题解-15](https://gitee.com/f0rest9999/images/raw/master/20201223145956.jpg)
+
+==思路2：用KMP算法来解决本题==
+
+==对KMP算法更改一下，让其返回第一个能匹配到的位置索引==
+
+```java
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        if(len2 == 0)   return 0;
+        if(len1 < len2) return -1;
+        return KMP(haystack.toCharArray(), needle.toCharArray());
+    }
+    private int[] makePai(char[] pattern){
+        int[] pai = new int[pattern.length];
+        int index = 0;
+        pai[index] = 0;
+        for(int i = 1;i < pai.length;){
+            if(pattern[index] == pattern[i]){
+                pai[i] = index + 1;
+                index ++;
+                i++;
+            }else{
+                if(index != 0){
+                    index = pai[index - 1];
+                }else{
+                    pai[i] = 0;
+                    i ++;
+                }
+            }
+        }
+        return pai;
+    }
+   
+    private int KMP(char[] text, char[] pattern){
+        int[] pai = makePai(pattern);
+        int i = 0;
+        int j = 0;
+        while(i < text.length && j < pattern.length){
+            if(text[i] == pattern[j]){
+                i++;
+                j++;
+            }else{
+                if(j != 0){
+                    j = pai[j - 1];
+                }else{
+                    i ++;
+                }
+            }
+            if(j == pattern.length){
+                return i - pattern.length;
+            }
+        }
+        return -1;
+    }
+}
+```
 
 
-## 数组
+
+#### 179 最大数
+
+```
+给定一组非负整数 nums，重新排列它们每个数字的顺序（每个数字不可拆分）使之组成一个最大的整数。
+
+注意：输出结果可能非常大，所以你需要返回一个字符串而不是整数。
+
+ 
+
+示例 1：
+
+输入：nums = [10,2]
+输出："210"
+示例 2：
+
+输入：nums = [3,30,34,5,9]
+输出："9534330"
+示例 3：
+
+输入：nums = [1]
+输出："1"
+示例 4：
+
+输入：nums = [10]
+输出："10"
+ 
+
+提示：
+
+1 <= nums.length <= 100
+0 <= nums[i] <= 109
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/largest-number
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：==注意Comparator中比较函数的技巧以及String类型的comparetTo的使用==
+
+```java
+class Solution {
+    public String largestNumber(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        for(int i : nums){
+            list.add(i);
+        }
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer i1, Integer i2) {
+                String s1 = Integer.toString(i1);
+                String s2 = Integer.toString(i2);
+                return (s2 + s1).compareTo(s1 + s2);
+            }
+        });
+        StringBuffer sb = new StringBuffer();
+        if(list.get(0) == 0)    return "0";
+        for(int i : list){
+            sb.append(i);
+        }
+        return sb.toString();
+    }
+}
+```
+
+
+
+## 数组和矩阵
 
 ####204 计算质数
 
