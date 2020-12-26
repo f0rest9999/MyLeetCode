@@ -183,8 +183,12 @@
 | [37. 解数独](https://leetcode-cn.com/problems/sudoku-solver/) | 2020-12-14 |  ❌🔴⭐  |          ⚡          |
 | [40. 组合总和 II](https://leetcode-cn.com/problems/combination-sum-ii/) | 2020-12-16 |  ✅🔵⭐  |          ⚡          |
 | [16. 最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/) | 2020-12-17 |  ✅🔵   |          ⚡          |
-|                                                              |            |       |                     |
-|                                                              |            |       |                     |
+| [526. 优美的排列](https://leetcode-cn.com/problems/beautiful-arrangement/) | 2020-12-25 |  ✅🔵   |          ⚡          |
+| [784. 字母大小写全排列](https://leetcode-cn.com/problems/letter-case-permutation/) | 2020-12-25 |  ✅🔵   |          ⚡          |
+| [797. 所有可能的路径](https://leetcode-cn.com/problems/all-paths-from-source-to-target/) | 2020-12-26 |  ✅🔵   |          ⚡          |
+| [967. 连续差相同的数字](https://leetcode-cn.com/problems/numbers-with-same-consecutive-differences/) | 2020-12-26 |  ✅🔵   |          ⚡          |
+| [1079. 活字印刷](https://leetcode-cn.com/problems/letter-tile-possibilities/) | 2020-12-26 |  ✅🔵   |          ⚡          |
+| [1219. 黄金矿工](https://leetcode-cn.com/problems/path-with-maximum-gold/) | 2020-12-26 |  ✅🔵   |          ⚡          |
 
 ### 字符串
 
@@ -252,11 +256,11 @@
 | [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/) | 12-23 |  ❓⚪  |        ⭐         |
 | [342. 4的幂](https://leetcode-cn.com/problems/power-of-four/) | 12-23 |  ❓⚪  |       秒啊       |
 | [389. 找不同](https://leetcode-cn.com/problems/find-the-difference/) | 12-23 |  ✅⚪  | char类型也可以用 |
-| [461. 汉明距离](https://leetcode-cn.com/problems/hamming-distance/) | 12-23 |  ⚪   |       没做       |
-| [476. 数字的补数](https://leetcode-cn.com/problems/number-complement/) | 12-23 |  ⚪   |       没做       |
-| [693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/) | 12-23 |  ⚪   |       没做       |
-| [1342. 将数字变成 0 的操作次数](https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero/) | 12-23 |  ⚪   |       没做       |
-| [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/) | 12-23 |  ⚪   |       没做       |
-| [剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/) | 12-23 |  ⚪   |       没做       |
-| [面试题 17.04. 消失的数字](https://leetcode-cn.com/problems/missing-number-lcci/) | 12-23 |  ⚪   |       没做       |
+| [461. 汉明距离](https://leetcode-cn.com/problems/hamming-distance/) | 12-23 |  ✅⚪  |                  |
+| [476. 数字的补数](https://leetcode-cn.com/problems/number-complement/) | 12-23 |  ❓⚪  |                  |
+| [693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/) | 12-23 |  ❓⚪  |                  |
+| [1342. 将数字变成 0 的操作次数](https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero/) | 12-23 |  ✅⚪  |                  |
+| [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/) | 12-23 |  ✅⚪  |                  |
+| [剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/) | 12-23 |  ✅⚪  |                  |
+| [面试题 17.04. 消失的数字](https://leetcode-cn.com/problems/missing-number-lcci/) | 12-23 |  ✅⚪  |                  |
 

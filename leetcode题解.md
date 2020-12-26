@@ -5272,7 +5272,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-思路：用used和begin 进行剪枝
+思路：用used和begin 进行剪枝,==注意 !used[i - 1] 条件的书写==
 
 ```java
 class Solution {
@@ -5389,6 +5389,534 @@ class Solution {
     }
 }
 ```
+
+#### 526 优美的排列
+
+```
+假设有从 1 到 N 的 N 个整数，如果从这 N 个数字中成功构造出一个数组，使得数组的第 i 位 (1 <= i <= N) 满足如下两个条件中的一个，我们就称这个数组为一个优美的排列。条件：
+
+第 i 位的数字能被 i 整除
+i 能被第 i 位上的数字整除
+现在给定一个整数 N，请问可以构造多少个优美的排列？
+
+示例1:
+
+输入: 2
+输出: 2
+解释: 
+
+第 1 个优美的排列是 [1, 2]:
+  第 1 个位置（i=1）上的数字是1，1能被 i（i=1）整除
+  第 2 个位置（i=2）上的数字是2，2能被 i（i=2）整除
+
+第 2 个优美的排列是 [2, 1]:
+  第 1 个位置（i=1）上的数字是2，2能被 i（i=1）整除
+  第 2 个位置（i=2）上的数字是1，i（i=2）能被 1 整除
+说明:
+
+N 是一个正整数，并且不会超过15。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/beautiful-arrangement
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：
+
+```java
+class Solution {
+    private int res = 0;
+    private int N;
+    private boolean[] used;
+    public int countArrangement(int N) {
+        if(N == 1) return 1;
+        this.N = N;
+        // Deque<Integer> path = new ArrayDeque<>();
+        int[] nums = new int[N];
+        for(int i = 0;i < N;i++){
+            nums[i] = i + 1;
+        }
+        used = new boolean[N];
+        // dfs(path, nums);
+        dfs(0, nums);
+        return res;
+    }
+    public void dfs(int length, int[] nums){
+        // if(path.size() == N){
+        if(length == N){   
+            res ++;
+            // for(int i : path){
+            //     System.out.print(i + " ");
+            // }
+            // System.out.println();
+            return;
+        }
+        for(int i = 0;i < nums.length;i++){
+            if(!used[i]){
+            // if(path.size() == 0 || (nums[i] % (path.size() + 1) == 0 || (path.size() + 1) % nums[i] == 0)){
+                if(length == 0 || nums[i] % (length + 1) == 0 || (length + 1) % nums[i] == 0){
+                    used[i] = true;
+                    // path.add(nums[i]);
+                    // dfs(path, nums);
+                    dfs(length + 1, nums);
+                    used[i] = false;
+                    // path.removeLast();
+                }
+            }
+        }
+        return ;
+    }
+}
+```
+
+#### 784 字母大小的全排列
+
+```
+给定一个字符串S，通过将字符串S中的每个字母转变大小写，我们可以获得一个新的字符串。返回所有可能得到的字符串集合。
+
+ 
+
+示例：
+输入：S = "a1b2"
+输出：["a1b2", "a1B2", "A1b2", "A1B2"]
+
+输入：S = "3z4"
+输出：["3z4", "3Z4"]
+
+输入：S = "12345"
+输出：["12345"]
+ 
+
+提示：
+
+S 的长度不超过12。
+S 仅由数字和字母组成。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/letter-case-permutation
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路:
+
+```java
+class Solution {
+    private List<String> resList = new ArrayList<>();
+    private boolean used[];
+    private boolean isChar[];
+    private int len;
+    public List<String> letterCasePermutation(String S) {
+        len = S.length();
+        if(len == 0)    return resList;
+        used = new boolean[len];
+        isChar = new boolean[len];
+        for(int i = 0;i < len;i++){
+            char c = S.charAt(i);
+            if((c <= 90 && c >= 65) || (c >= 97 && c <= 122))
+                isChar[i] = true;
+        }
+        resList.add(S);
+        dfs(0, S.toCharArray(), 0);
+        return resList;
+    }
+    public void dfs(int depth, char[] array, int begin){
+         if(depth == len){
+            return;
+        }
+        for(int i = begin;i < len;i++){
+            if(!isChar[i]){
+                continue;
+            }
+            if(!used[i]){
+                used[i] = true;
+
+                if(array[i] <= 90 && array[i] >= 65)
+                    array[i] += 'a' - 'A';
+                else
+                    array[i] -= 'a' - 'A';
+                resList.add(String.valueOf(array));
+                dfs(i + 1, array, i);
+                if(array[i] <= 122 && array[i] >= 97)
+                    array[i] -= 'a' - 'A';
+                else
+                    array[i] += 'a' - 'A';
+                used[i] = false;
+            }
+        }
+    }
+}
+```
+
+#### 797 所有可能的路径
+
+```
+给一个有 n 个结点的有向无环图，找到所有从 0 到 n-1 的路径并输出（不要求按顺序）
+
+二维数组的第 i 个数组中的单元都表示有向图中 i 号结点所能到达的下一些结点（译者注：有向图是有方向的，即规定了 a→b 你就不能从 b→a ）空就是没有下一个结点了。
+
+示例 1：
+
+输入：graph = [[1,2],[3],[3],[]]
+输出：[[0,1,3],[0,2,3]]
+解释：有两条路径 0 -> 1 -> 3 和 0 -> 2 -> 3
+示例 2：
+
+输入：graph = [[4,3,1],[3,2,4],[3],[4],[]]
+输出：[[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
+示例 3：
+
+输入：graph = [[1],[]]
+输出：[[0,1]]
+示例 4：
+
+输入：graph = [[1,2,3],[2],[3],[]]
+输出：[[0,1,2,3],[0,2,3],[0,3]]
+示例 5：
+
+输入：graph = [[1,3],[2],[3],[]]
+输出：[[0,1,2,3],[0,3]]
+ 
+
+提示：
+
+结点的数量会在范围 [2, 15] 内。
+你可以把路径以任意顺序输出，但在路径内的结点的顺序必须保证。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/all-paths-from-source-to-target
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+示例1![image-20201226090127095](https://gitee.com/f0rest9999/images/raw/master/20201226090134.png)示例二![image-20201226090154794](https://gitee.com/f0rest9999/images/raw/master/20201226090154.png)
+
+
+
+思路：==这个题可以调试一下，为什么不能在row - 1时，直接加入curNode==
+
+```java
+class Solution {
+    private List<List<Integer>> resList = new ArrayList<>();
+    private boolean used[];
+    private int[][] graph;
+    private int row;
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+		this.graph = graph;
+        row = graph.length;
+        if(row == 0)	return resList;
+        used = new boolean [row];
+        Deque<Integer> path = new ArrayDeque<>();
+        dfs(path, 0);
+        for(List list : resList){
+            list.add(row - 1);
+        }
+        return resList;
+    } 
+    public void dfs(Deque<Integer> path, int curNode){
+        if(curNode == row - 1){
+            resList.add(new ArrayList<>(path));
+            return;
+        }
+        for(int i : graph[curNode]){
+            if(!used[i]){
+                path.add(curNode);
+                used[i] = true;
+                    
+                dfs(path, i);
+
+                used[i] = false;
+                path.removeLast();
+            }
+        }
+    }
+}
+```
+
+#### 842 将数组拆分成斐波那契数列
+
+```
+842. 将数组拆分成斐波那契序列
+给定一个数字字符串 S，比如 S = "123456579"，我们可以将它分成斐波那契式的序列 [123, 456, 579]。
+
+形式上，斐波那契式序列是一个非负整数列表 F，且满足：
+
+0 <= F[i] <= 2^31 - 1，（也就是说，每个整数都符合 32 位有符号整数类型）；
+F.length >= 3；
+对于所有的0 <= i < F.length - 2，都有 F[i] + F[i+1] = F[i+2] 成立。
+另外，请注意，将字符串拆分成小块时，每个块的数字一定不要以零开头，除非这个块是数字 0 本身。
+
+返回从 S 拆分出来的任意一组斐波那契式的序列块，如果不能拆分则返回 []。
+示例 1：
+
+输入："123456579"
+输出：[123,456,579]
+示例 2：
+
+输入: "11235813"
+输出: [1,1,2,3,5,8,13]
+示例 3：
+
+输入: "112358130"
+输出: []
+解释: 这项任务无法完成。
+示例 4：
+
+输入："0123"
+输出：[]
+解释：每个块的数字不能以零开头，因此 "01"，"2"，"3" 不是有效答案。
+示例 5：
+
+输入: "1101111"
+输出: [110, 1, 111]
+解释: 输出 [11,0,11,11] 也同样被接受。
+ 
+
+提示：
+
+1 <= S.length <= 200
+字符串 S 中只含有数字。
+```
+
+思路：
+
+```java
+class Solution {
+    public List<Integer> splitIntoFibonacci(String S) {
+
+    }
+}
+```
+
+#### 967 连续差相同的数字
+
+```
+返回所有长度为 N 且满足其每两个连续位上的数字之间的差的绝对值为 K 的非负整数。
+
+请注意，除了数字 0 本身之外，答案中的每个数字都不能有前导零。例如，01 因为有一个前导零，所以是无效的；但 0 是有效的。
+
+你可以按任何顺序返回答案。
+
+ 
+
+示例 1：
+
+输入：N = 3, K = 7
+输出：[181,292,707,818,929]
+解释：注意，070 不是一个有效的数字，因为它有前导零。
+示例 2：
+
+输入：N = 2, K = 1
+输出：[10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98]
+ 
+
+提示：
+
+1 <= N <= 9
+0 <= K <= 9
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/numbers-with-same-consecutive-differences
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：==脑子糊涂了，这题写了好久，但是还是写出来了==
+
+```java
+class Solution {
+    private HashSet<Integer> set = new HashSet<>();
+    private int n;
+    private int k;
+    public int[] numsSameConsecDiff(int n, int k) {
+		this.n = n;
+        this.k = k;
+       	for(int i = 1;i <= 9;i++){
+            dfs(i, 1);
+        }
+        int count = 0;
+        int[] res = new int[set.size()];
+       	for(int i : set){
+            res[count++] = i;
+        }   
+        return res;
+    }
+    public void dfs(int nowNum, int depth){
+        if(depth == n){
+            set.add(nowNum);
+            return ;
+        }
+        int last = nowNum % 10;
+        for(int i = 0;i <= 9;i++){
+            if(last - i == k){
+                dfs(nowNum * 10 + i, depth + 1);
+            }
+            if(i - last == k){
+                dfs(nowNum * 10 + i, depth + 1);
+            }
+        }
+    }
+}
+```
+
+#### 1079 活字印刷
+
+```
+你有一套活字字模 tiles，其中每个字模上都刻有一个字母 tiles[i]。返回你可以印出的非空字母序列的数目。
+
+注意：本题中，每个活字字模只能使用一次。
+
+示例 1：
+
+输入："AAB"
+输出：8
+解释：可能的序列为 "A", "B", "AA", "AB", "BA", "AAB", "ABA", "BAA"。
+示例 2：
+
+输入："AAABBC"
+输出：188
+ 
+提示：
+
+1 <= tiles.length <= 7
+tiles 由大写英文字母组成
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/letter-tile-possibilities
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：
+
+```java
+class Solution {
+    private boolean[] used;
+    private char[] characters;
+    private int res = 0;
+    private int len;
+    public int numTilePossibilities(String tiles) {
+		len = tiles.length();
+        if(len == 0)	return 0;
+        used = new boolean[len];
+        characters = tiles.toCharArray();
+        Arrays.sort(characters);
+        // Deque<Character> path = new ArrayDeque<>();
+        // dfs(0, path);
+        dfs(0);
+        return res;
+    }
+    // public void dfs(int depth, Deque<Character> path){
+    public void dfs(int depth){   
+        if(depth == len){
+            return;
+        }
+        for(int i = 0;i < len;i++){
+            if(i > 0 && characters[i] == characters[i - 1] && !used[i - 1])
+                continue;
+           	
+            if(!used[i]){
+                used[i] = true;
+                res ++;
+                // path.add(characters[i]);
+                // System.out.println(path);
+                dfs(depth + 1);
+                used[i] = false;
+                // path.removeLast();
+            }
+        }
+    }
+}
+```
+
+#### 1219 黄金矿工
+
+```
+你要开发一座金矿，地质勘测学家已经探明了这座金矿中的资源分布，并用大小为 m * n 的网格 grid 进行了标注。每个单元格中的整数就表示这一单元格中的黄金数量；如果该单元格是空的，那么就是 0。
+
+为了使收益最大化，矿工需要按以下规则来开采黄金：
+
+每当矿工进入一个单元，就会收集该单元格中的所有黄金。
+矿工每次可以从当前位置向上下左右四个方向走。
+每个单元格只能被开采（进入）一次。
+不得开采（进入）黄金数目为 0 的单元格。
+矿工可以从网格中 任意一个 有黄金的单元格出发或者是停止。
+ 
+
+示例 1：
+
+输入：grid = [[0,6,0],[5,8,7],[0,9,0]]
+输出：24
+解释：
+[[0,6,0],
+ [5,8,7],
+ [0,9,0]]
+一种收集最多黄金的路线是：9 -> 8 -> 7。
+示例 2：
+
+输入：grid = [[1,0,7],[2,0,6],[3,4,5],[0,3,0],[9,0,20]]
+输出：28
+解释：
+[[1,0,7],
+ [2,0,6],
+ [3,4,5],
+ [0,3,0],
+ [9,0,20]]
+一种收集最多黄金的路线是：1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7。
+ 
+提示：
+
+1 <= grid.length, grid[i].length <= 15
+0 <= grid[i][j] <= 100
+最多 25 个单元格中有黄金。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/path-with-maximum-gold
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：==FloodFill==
+
+```java
+class Solution {
+    private boolean[][] isVisited;
+    private int row;
+    private int col;
+    private int[][] directions = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    private int maxGold = 0;
+    private int[][] grid;
+    public int getMaximumGold(int[][] grid) {
+		row = grid.length;
+        this.grid = grid;
+        if(row == 0) return 0;
+        col = grid[0].length;
+        isVisited = new boolean[row][col];
+        for(int i = 0;i < row;i++){
+            for(int j = 0;j < col;j++){
+                if(grid[i][j] > 0){
+                    dfs(i, j, grid[i][j]);
+                }
+            }
+        }
+        return maxGold;
+    }
+    public void dfs(int i, int j, int curGold){
+        isVisited[i][j] = true;
+        maxGold = Math.max(maxGold, curGold);
+        for(int k = 0;k < 4;k++){
+            int newX = i + directions[k][0];
+            int newY = j + directions[k][1];
+            if(isInArea(newX, newY) && !isVisited[newX][newY] && grid[newX][newY] != 0){
+                dfs(newX, newY, curGold + grid[newX][newY]);
+            }
+        }
+        isVisited[i][j] = false;
+    }
+    public boolean isInArea(int i, int j){
+        return (i >=0 && i < row && j >= 0 && j < col);
+    }
+}
+```
+
+
+
+
 
 ## 字符串
 
@@ -5646,6 +6174,10 @@ class Solution {
     }
 }
 ```
+
+
+
+
 
 
 
@@ -6673,86 +7205,281 @@ class Solution {
 #### 461 汉明距离
 
 ```
+两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
 
+给出两个整数 x 和 y，计算它们之间的汉明距离。
+
+注意：
+0 ≤ x, y < 231.
+
+示例:
+
+输入: x = 1, y = 4
+
+输出: 2
+
+解释:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+
+上面的箭头指出了对应二进制位不同的位置。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/hamming-distance
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-思路：
+思路：这个汉明距离就是异或的使用，然后我们遍历异或之后的每一位，看有多少个1就是有多少位不一样
 
 ```java
-
+class Solution {
+    public int hammingDistance(int x, int y) {
+        int k = x ^ y;
+        int sum = 0;
+        while(k > 0){
+            if((k & 1) == 1)
+                sum ++;
+            k = k >> 1;
+        }
+        return sum;
+    }
+}
 ```
 
 #### 476 数字的补数
 
 ```
+给定一个正整数，输出它的补数。补数是对该数的二进制表示取反。
+示例 1:
 
+输入: 5
+输出: 2
+解释: 5 的二进制表示为 101（没有前导零位），其补数为 010。所以你需要输出 2 。
+示例 2:
+
+输入: 1
+输出: 0
+解释: 1 的二进制表示为 1（没有前导零位），其补数为 0。所以你需要输出 0 。
+ 
+
+注意:
+
+给定的整数保证在 32 位带符号整数的范围内。
+你可以假定二进制数不包含前导零位。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/number-complement
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-思路：
+思路：==该题目中规定的数字的补数，相当于我们对于这个数求二进制位数k之后，该数与k个1异或之后的结果==
 
 ```java
-
+class Solution {
+    public int findComplement(int num) {
+        int k = 0;
+        int temp = num;
+        while(num > 0){
+            k ++;
+            num >>= 1;
+        }
+        return temp ^ ((1 << k) - 1);
+    }
+}
 ```
 
-#### 693 交替位的二进制数
+#### 693 交替位二进制数
 
 ```
+给定一个正整数，检查它的二进制表示是否总是 0、1 交替出现：换句话说，就是二进制表示中相邻两位的数字永不相同。
 
+示例 1：
+
+输入：n = 5
+输出：true
+解释：5 的二进制表示是：101
+示例 2：
+
+输入：n = 7
+输出：false
+解释：7 的二进制表示是：111.
+示例 3：
+
+输入：n = 11
+输出：false
+解释：11 的二进制表示是：1011.
+示例 4：
+
+输入：n = 10
+输出：true
+解释：10 的二进制表示是：1010.
+示例 5：
+
+输入：n = 3
+输出：false
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/binary-number-with-alternating-bits
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-思路：
+思路：所有交替的只能有两种形式
+
+1010101010    右移一位   101010101    异或一下之后的num = 1111111111
+
+101010101       右移一位   10101010      异或一下之后的num = 111111111
+
+即对于所有的类似的形式  num 全为1，为了返回num是否是这种类型，我们用 num & (num + 1) 是否为0 进行判断
 
 ```java
-
+class Solution {  
+    public boolean hasAlternatingBits(int n) {
+        int num = n ^ (n >> 1);
+        return (num & num + 1) == 0;
+    }
+}
 ```
 
 #### 1342 将数字变成0的操作次数
 
 ```
+给你一个非负整数 num ，请你返回将它变成 0 所需要的步数。 如果当前数字是偶数，你需要把它除以 2 ；否则，减去 1 。
 
+示例 1：
+
+输入：num = 14
+输出：6
+解释：
+步骤 1) 14 是偶数，除以 2 得到 7 。
+步骤 2） 7 是奇数，减 1 得到 6 。
+步骤 3） 6 是偶数，除以 2 得到 3 。
+步骤 4） 3 是奇数，减 1 得到 2 。
+步骤 5） 2 是偶数，除以 2 得到 1 。
+步骤 6） 1 是奇数，减 1 得到 0 。
+示例 2：
+
+输入：num = 8
+输出：4
+解释：
+步骤 1） 8 是偶数，除以 2 得到 4 。
+步骤 2） 4 是偶数，除以 2 得到 2 。
+步骤 3） 2 是偶数，除以 2 得到 1 。
+步骤 4） 1 是奇数，减 1 得到 0 。
+示例 3：
+
+输入：num = 123
+输出：12
+提示：
+
+0 <= num <= 10^6
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-思路：
+思路：两个点
+
+- i & 1 == 1时是奇数，否则是偶数，比i % 2 == 0这样判断更快捷
+- 移位运算符的使用
 
 ```java
-
+class Solution {
+    public int numberOfSteps (int num) {
+        int count = 0;
+        while(num > 0){
+            if((num & 1) == 1)
+                num --;
+            else
+                num >>= 1;
+            count ++;
+        }
+        return count;
+    }
+}
 ```
 
-#### 剑指Offer15 二进制中1的个数
+#### 剑指Offer 15 二进制中1的个数
 
 ```
+请实现一个函数，输入一个整数（以二进制串形式），输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。
 
+ 
+
+示例 1：
+
+输入：00000000000000000000000000001011
+输出：3
+解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。
+示例 2：
+
+输入：00000000000000000000000010000000
+输出：1
+解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 '1'。
+示例 3：
+
+输入：11111111111111111111111111111101
+输出：31
+解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 '1'。
+ 
+
+提示：
+
+输入必须是长度为 32 的 二进制串 。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-思路：
+思路：==同上述191题==
 
-```java
+#### 剑指Offer 39数组中出现次数超过一半的数字
+
+ ```
+数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+
+示例 1:
+
+输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]
+输出: 2
+ 
+限制：
+
+1 <= 数组长度 <= 50000
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ ```
+
+思路：==同上述169题==
+
+#### 面试题 消失的数字
 
 ```
+数组nums包含从0到n的所有整数，但其中缺了一个。请编写代码找出那个缺失的整数。你有办法在O(n)时间内完成吗？
 
-#### 剑指Offer19 数组中出现超过一半的数字
+注意：本题相对书上原题稍作改动
 
+示例 1：
+
+输入：[3,0,1]
+输出：2
+ 
+
+示例 2：
+
+输入：[9,6,4,2,3,5,7,0,1]
+输出：8
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/missing-number-lcci
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-```
-
-思路：
-
-```java
-
-```
-
-#### 面试题 17.04 消失的数字
-
-```
-
-```
-
-思路：
-
-```java
-
-```
-
-
+思路：==同上述268题==
 
