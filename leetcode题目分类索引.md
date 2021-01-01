@@ -196,7 +196,7 @@
 | :----------------------------------------------------------: | :--------: | :--: | :-----------------: |
 | [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/) | 2020-12-22 | ✅⚪⭐  |        ⚡KMP⭐        |
 | [179. 最大数](https://leetcode-cn.com/problems/largest-number/) | 2020-12-23 | ❓🔵⭐  | ⚡Comparator排序技巧 |
-|                                                              |            |      |                     |
+| [125. 验证回文串](https://leetcode-cn.com/problems/valid-palindrome/) | 2020-12-26 |  ✅⚪  |   ⚡ASCii码的范围    |
 |                                                              |            |      |                     |
 |                                                              |            |      |                     |
 |                                                              |            |      |                     |
@@ -205,16 +205,16 @@
 
 ### 数组和矩阵
 
-|                             题目                             |    日期    | 状态 |     备注     |
-| :----------------------------------------------------------: | :--------: | :--: | :----------: |
-| [204. 计数质数](https://leetcode-cn.com/problems/count-primes/) | 2020-12-3  |  ✅⚪  | 厄拉多塞筛法 |
-| [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 2020-12-16 |  ❓🔵  | 排序API练习⚡ |
-| [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/) | 2020-12-16 |  ✅🔵  |      ⚡       |
-| [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/) | 2020-12-17 |  ❓🔵  |    ⚡妙啊     |
-| [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/) | 2020-12-18 |  ✅🔵  |    ⚡妙啊     |
-| [1664. 生成平衡数组的方案数](https://leetcode-cn.com/problems/ways-to-make-a-fair-array/) | 2020-12-21 | ❌🔵⭐  | ⚡前缀和问题  |
-|                                                              |            |      |              |
-|                                                              |            |      |              |
+|                             题目                             |    日期    | 状态 |     备注      |
+| :----------------------------------------------------------: | :--------: | :--: | :-----------: |
+| [204. 计数质数](https://leetcode-cn.com/problems/count-primes/) | 2020-12-3  |  ✅⚪  | 厄拉多塞筛法  |
+| [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 2020-12-16 |  ❓🔵  | 排序API练习⚡  |
+| [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/) | 2020-12-16 |  ✅🔵  |       ⚡       |
+| [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/) | 2020-12-17 |  ❓🔵  |     ⚡妙啊     |
+| [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/) | 2020-12-18 |  ✅🔵  |     ⚡妙啊     |
+| [1664. 生成平衡数组的方案数](https://leetcode-cn.com/problems/ways-to-make-a-fair-array/) | 2020-12-21 | ❌🔵⭐  |  ⚡前缀和问题  |
+| [1046. 最后一块石头的重量](https://leetcode-cn.com/problems/last-stone-weight/) | 2020-12-30 |  ✅⚪  | ⚡大顶堆的使用 |
+| [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/) |  2021-1-1  | ✅🔵⭐⭐ | ⚡新颖的思维！ |
 
 ### SQL
 

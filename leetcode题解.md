@@ -3593,6 +3593,51 @@ class Solution {
 }
 ```
 
+==题解2：第2次碰到这个题之后，自己的写法，虽然繁琐了一点，但是好像更易懂，在反转链表的基础上，简单加入了一些控制条件==
+
+==和上面的题解效果是差不多的==
+
+```java
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null)    return null;
+        ListNode preHead = new ListNode(0);
+        preHead.next = head;
+        ListNode p = preHead;
+        ListNode q = head;
+        ListNode tag1 = null;
+        ListNode tag2 = null;
+        int count = 1;
+        while(q != null){
+            if(count == m)
+                tag1 = p;
+            if(count == n + 1){
+                tag2 = q;
+                p.next = null;
+                break;
+            }
+            count ++;
+            p = p.next;
+            q = q.next;
+        }
+        tag1.next = recur(tag1.next);
+        q = preHead;
+        while(q.next != null){
+            q = q.next;
+        }
+        q.next = tag2;
+        return preHead.next;
+    }
+    public ListNode recur(ListNode head){
+        if(head == null || head.next == null)    return head;
+        ListNode p = recur(head.next);
+        head.next.next = head;
+        head.next = null;
+        return p;
+    }
+}
+```
+
 #### 21 合并两个有序链表
 
 ```
@@ -4066,9 +4111,45 @@ class Solution {
 ```
 
 - 再剪枝
+- 加了个target > sum 变快了
 
 ```jaVa
+class Solution {
+    int target;
+    boolean[] used;
+    int k = 0;
+    //自己写出来的存在重复元组
+    //[[2,2,3],[2,3,2],[3,2,2],[7]]
+    //即需要剪枝
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> resList = new ArrayList<>();
+        int len = candidates.length;
+        if(len == 0)    return resList;
+        //判断条件应该是现在的sum是否大于target
+        List<Integer> path = new ArrayList<>();
+        this.target = target;
+        dfs(path, 0,resList, candidates, 0, len);
+        return resList;
+    }
+    public void dfs(List<Integer> path, int begin,List<List<Integer>> resList, int[] candidates, int sum, int len){
+        if(sum > target)
+            return;
+        if(sum == target){
+            resList.add(new ArrayList<>(path));
+            return;
+        }
+        for(int i = begin;i < len && target > sum;i++){
+        	sum += candidates[i];
+            path.add(candidates[i]);
+			
+            dfs(path, i, resList, candidates, sum, len);
 
+            sum -= candidates[i];
+            path.remove(path.size() - 1);    
+        } 
+        
+    }
+}
 ```
 
 #### 46 全排列
@@ -4428,7 +4509,7 @@ class Solution {
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ```
 
-思路：n个数共有n！的排列方式，那么对于n - 1个数应该是（n-1）!中排列方式，我们可以用这个数作为区间长度，来进行剪枝，就是确定了第一个要加入的值之后，然后再在其他的值上正常的进行回溯，然后在回溯结果生成的list中寻找结果，这个方法在边界情况（即我找的数恰巧是某个划分过的区间的最后一个排列）时，也很麻烦。总之，这个还是太inefficient。抽时间看看别人的题解。
+思路：n个数共有n！的排列方式，那么对于n - 1个数应该是（n-1）!中排列方式，我们可以用这个数作为区间长度，来进行剪枝，就是确定了第一个要加入的值之后，然后再在其他的值上正常的进行回溯，然后在回溯结果生成的list中寻找结果，这个方法在边界情况（即我找的数恰巧是某个划分过的区间的最后一个排列）时，也很麻烦。总之，这个还是太==inefficient==。抽时间看看别人的题解。
 
 （猜测可以优化的点：1.可以对于每个小于n的数都计算阶乘，然后一步步将区间缩小，而不只是对第一层做剪枝2.resList的使用花费了大量额外的空间）
 
@@ -4740,12 +4821,57 @@ class Solution {
 }
 ```
 
-思路2：广度优先遍历
+思路2：广度优先遍历，==有点类似于二叉树的广度遍历==
+
+- ==我们用一个数来方便唯一地标记一下（i，j），这样压入队列地时候压入一个数即可，我们用i * col + j 来表示（i，j）==
 
 ```java
 class Solution {
+    private char[][] grid;
+    private boolean[][] visited;
+    private int[][] directions = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    private int row;
+    private int col;
     public int numIslands(char[][] grid) {
-
+		row = grid.length;
+        if(row == 0)	return 0;
+        col = grid[0].length;
+        this.grid = grid;
+        int res = 0;
+        visited = new boolean[row][col];
+        for(int i = 0;i < row;i++){
+            for(int j = 0;j < col;j++){
+               	if(grid[i][j] == '1' && !visited[i][j]){
+                    bfs(i, j);
+                    res ++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    public void bfs(int i, int j){
+        Queue<Integer> que = new LinkedList<>();
+        que.offer(i * col + j);
+        visited[i][j] = true;
+        //poll一个就把它所有可以一步到达的全部加入que中
+        while(!que.isEmpty()){
+            int cur = que.poll();
+            int curX = cur / col;
+            int curY = cur % col;
+            for(int k = 0;k < 4;k++){
+                int newX = curX + directions[k][0];
+                int newY = curY + directions[k][1];
+                if(isInArea(newX, newY) && !visited[newX][newY] && grid[newX][newY] == '1'){
+                    que.offer(newX * col + newY);
+                    visited[newX][newY] = true;
+                }
+            }
+        }
+    }
+    
+    public boolean isInArea(int i, int j){
+        return i >= 0 && i < row && j >= 0 && j < col;
     }
 }
 ```
@@ -5591,7 +5717,9 @@ class Solution {
 
 
 
-思路：==这个题可以调试一下，为什么不能在row - 1时，直接加入curNode==
+思路1：==为什么不能在row - 1时，直接加入curNode，这样会导致每一次添加进去一个结果之后，path中实际上比之前多了一个元素，直接导致还原不了之前的状态了，会产生下面的情况：第n个结果都比实际的多n个无关元素==
+
+![image-20201231140218602](https://gitee.com/f0rest9999/images/raw/master/20201231140218.png)
 
 ```java
 class Solution {
@@ -5626,6 +5754,38 @@ class Solution {
                 used[i] = false;
                 path.removeLast();
             }
+        }
+    }
+}
+```
+
+思路2：因为其中不存在环（包括指向自己的结点），因此其实不用used数组的
+
+```java
+class Solution {
+    private List<List<Integer>> resList = new ArrayList<>();
+    private int[][] graph;
+    private int row;
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+		this.graph = graph;
+        row = graph.length;
+        if(row == 0)	return resList;
+        Deque<Integer> path = new ArrayDeque<>();
+        dfs(path, 0);
+        for(List list : resList){
+            list.add(row - 1);
+        }
+        return resList;
+    } 
+    public void dfs(Deque<Integer> path, int curNode){
+        if(curNode == row - 1){
+            resList.add(new ArrayList<>(path));
+            return;
+        }
+        for(int i : graph[curNode]){
+            path.add(curNode);
+            dfs(path, i);
+            path.removeLast();
         }
     }
 }
@@ -6175,6 +6335,71 @@ class Solution {
 }
 ```
 
+#### 125 验证回文串
+
+```
+给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+
+说明：本题中，我们将空字符串定义为有效的回文串。
+
+示例 1:
+
+输入: "A man, a plan, a canal: Panama"
+输出: true
+示例 2:
+
+输入: "race a car"
+输出: false
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/valid-palindrome
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：先全部大写==s.toUpperCase()==，然后双指针
+
+- 常用ASCii码范围
+
+```java
+class Solution {
+    public boolean isPalindrome(String s) {
+        int len = s.length();
+        if(len == 0 || s == null)   return true;
+        int i = 0;
+        int j = len - 1;
+        s = s.toUpperCase();
+        while(i < j){
+            char c1 = s.charAt(i);
+            char c2 = s.charAt(j);
+            if(!(isChar(c1) || isNum(c1))){
+                i ++;
+                continue;
+            }
+            if(!(isChar(c2) || isNum(c2))){
+                j --;
+                continue;
+            }
+            if(c1 != c2)    
+                return false; 
+            else{
+                i ++;
+                j --;
+            }  
+        }
+        return true;
+    }
+    public boolean isChar(char c){
+        return c >= 65 && c <= 90;
+    }
+    // public boolean ischar(char c){
+    //     return c >= 97 && c <= 122;
+    // }
+    public boolean isNum(char c){
+        return c >= 48 && c <= 57;
+    }
+}
+```
+
 
 
 
@@ -6679,6 +6904,105 @@ class Solution {
                 res ++;
         }
         return res;
+    }
+}
+```
+
+#### 1046 最后一块石头的重量
+
+```
+
+有一堆石头，每块石头的重量都是正整数。
+
+每一回合，从中选出两块 最重的 石头，然后将它们一起粉碎。假设石头的重量分别为 x 和 y，且 x <= y。那么粉碎的可能结果如下：
+
+如果 x == y，那么两块石头都会被完全粉碎；
+如果 x != y，那么重量为 x 的石头将会完全粉碎，而重量为 y 的石头新重量为 y-x。
+最后，最多只会剩下一块石头。返回此石头的重量。如果没有石头剩下，就返回 0。
+
+ 
+
+示例：
+
+输入：[2,7,4,1,8,1]
+输出：1
+解释：
+先选出 7 和 8，得到 1，所以数组转换为 [2,4,1,1,1]，
+再选出 2 和 4，得到 2，所以数组转换为 [2,1,1,1]，
+接着是 2 和 1，得到 1，所以数组转换为 [1,1,1]，
+最后选出 1 和 1，得到 0，最终数组转换为 [1]，这就是最后剩下那块石头的重量。
+ 
+
+提示：
+
+1 <= stones.length <= 30
+1 <= stones[i] <= 1000
+通过次数40,666提交次数62,309
+```
+
+思路：大顶堆的使用方法，==注意初始化方法!!==
+
+```java
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        int len = stones.length;
+        if(len == 1)    return stones[0];
+        PriorityQueue<Integer> que = new PriorityQueue<Integer>((a, b) -> b - a);
+        for(int i : stones)
+            que.add(i);
+        while(que.size() > 1){
+            int x = que.poll();
+            int y = que.poll();
+            if(x != y)
+                que.add(x - y);
+        }
+        return que.isEmpty() ? 0 : que.poll();
+    }
+}
+```
+
+#### 287 寻找重复数
+
+```
+给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。
+
+示例 1:
+
+输入: [1,3,4,2,2]
+输出: 2
+示例 2:
+
+输入: [3,1,3,4,2]
+输出: 3
+说明：
+
+不能更改原数组（假设数组是只读的）。
+只能使用额外的 O(1) 的空间。
+时间复杂度小于 O(n2) 。
+数组中只有一个重复的数字，但它可能不止重复出现一次。
+```
+
+思路：==有环链表的思维！！==
+
+```java
+class Solution {
+    //快慢指针 把数组当成一个环 也太强了
+    public int findDuplicate(int[] nums) {
+        int fast = 0, slow = 0;
+        while(true){
+            fast = nums[nums[fast]];
+            slow = nums[slow];
+            if(fast == slow)
+                break;
+        }
+        int finder = 0;
+        while(true){
+            finder = nums[finder];
+            slow = nums[slow];
+            if(slow == finder)
+                break;
+        }
+        return slow;
     }
 }
 ```
