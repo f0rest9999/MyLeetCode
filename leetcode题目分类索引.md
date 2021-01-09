@@ -132,16 +132,16 @@
 
 ### 二分查找
 
-|                             题目                             |    日期    | 状态 | 备注 |
-| :----------------------------------------------------------: | :--------: | :--: | :--: |
-| [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 2020-12-2  | ❓🔵⭐  |  ⚡   |
-| [74. 搜索二维矩阵](https://leetcode-cn.com/problems/search-a-2d-matrix/) | 2020-12-18 |  ❓🔵  |  ⚡   |
-|                                                              |            |      |      |
-|                                                              |            |      |      |
-|                                                              |            |      |      |
-|                                                              |            |      |      |
-|                                                              |            |      |      |
-|                                                              |            |      |      |
+|                             题目                             |    日期    | 状态 | 备注  |
+| :----------------------------------------------------------: | :--------: | :--: | :---: |
+| [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 2020-12-2  | ❓🔵⭐  |   ⚡   |
+| [74. 搜索二维矩阵](https://leetcode-cn.com/problems/search-a-2d-matrix/) | 2020-12-18 |  ❓🔵  |   ⚡   |
+| [1712. 将数组分成三个子数组的方案数](https://leetcode-cn.com/problems/ways-to-split-array-into-three-subarrays/) |  2021-1-9  | ❓🔵⭐⭐ | ⚡好题 |
+|                                                              |            |      |       |
+|                                                              |            |      |       |
+|                                                              |            |      |       |
+|                                                              |            |      |       |
+|                                                              |            |      |       |
 
 ### 链表
 
@@ -197,7 +197,7 @@
 | [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/) | 2020-12-22 | ✅⚪⭐  |        ⚡KMP⭐        |
 | [179. 最大数](https://leetcode-cn.com/problems/largest-number/) | 2020-12-23 | ❓🔵⭐  | ⚡Comparator排序技巧 |
 | [125. 验证回文串](https://leetcode-cn.com/problems/valid-palindrome/) | 2020-12-26 |  ✅⚪  |   ⚡ASCii码的范围    |
-|                                                              |            |      |                     |
+| [443. 压缩字符串](https://leetcode-cn.com/problems/string-compression/) |  2021-1-9  |  ❌🔵  |  ⚡写了半天没写出来  |
 |                                                              |            |      |                     |
 |                                                              |            |      |                     |
 |                                                              |            |      |                     |

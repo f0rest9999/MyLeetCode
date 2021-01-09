@@ -3385,6 +3385,105 @@ class Solution {
 }
 ```
 
+#### 1712 将数组分成三个子数组的方案数
+
+```
+我们称一个分割整数数组的方案是 好的 ，当它满足：
+
+数组被分成三个 非空 连续子数组，从左至右分别命名为 left ， mid ， right 。
+left 中元素和小于等于 mid 中元素和，mid 中元素和小于等于 right 中元素和。
+给你一个 非负 整数数组 nums ，请你返回 好的 分割 nums 方案数目。由于答案可能会很大，请你将结果对 109 + 7 取余后返回。
+
+ 
+
+示例 1：
+
+输入：nums = [1,1,1]
+输出：1
+解释：唯一一种好的分割方案是将 nums 分成 [1] [1] [1] 。
+示例 2：
+
+输入：nums = [1,2,2,2,5,0]
+输出：3
+解释：nums 总共有 3 种好的分割方案：
+[1] [2] [2,2,5,0]
+[1] [2,2] [2,5,0]
+[1,2] [2,2] [5,0]
+示例 3：
+
+输入：nums = [3,2,1]
+输出：0
+解释：没有好的分割方案。
+ 
+
+提示：
+
+3 <= nums.length <= 105
+0 <= nums[i] <= 104
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/ways-to-split-array-into-three-subarrays
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+==思路：前缀和加上二分查找==
+
+先找把数组的前缀和存储起在sum数组中，
+
+注意==找第一次出现这个数的index的二分查找边界值==
+
+和==找最后一次出现这个数的index的二分查找边界值（其实相当于找第一个大于它的数的第一次出现的index，然后返回left - 1）==
+
+然后我们确定第一刀出现的范围，应该是【0， sum[总] / 3】，因为如果sum[第一刀]它大于sum[总] / 3，那么他不可能满足这个题要求
+
+对每一刀出现的位置我们判断可能出现的第二刀的范围，第二刀的sum[i]范围应该是（假设分成左、中、右三分）那么中的部分最小值应该是和左一样，中的最大值应该是和右一样，所以【sum[i] * 2，(sum[len - 1] - sum[i]) >> 1)】
+
+对于每计算出来第一刀之后能使用的第二刀的最小位置和最大位置，我们用最大位置 - 最小位置就可以得到这第一刀所能切出的所有情况
+
+```java
+class Solution {
+    public int waysToSplit(int[] nums) {
+        int len = nums.length;
+        int[] sum = new int[len];
+        sum[0] = nums[0];
+        for(int i = 1;i < len;i++){
+            sum[i] = sum[i - 1] + nums[i];
+        }
+        long res = 0;
+        for(int i = 0;i < len && sum[i] <= sum[len - 1] / 3;i++){
+            int left = lowerBound(i + 1, len - 1, sum, sum[i] * 2);
+            System.out.println((sum[len - 1] - sum[i]) / 2.0 + " " + ((sum[len - 1] - sum[i]) >> 1));
+            int right = upperBound(i + 1, len -1, sum, sum[i] + ((sum[len - 1] - sum[i]) >> 1));
+            if(right - left >= 0)
+                res += right - left + 1;
+        }   
+        return (int)(res % (1000000000 + 7));
+    }
+    //找第一次出现这个数的index
+    public int lowerBound(int left, int right, int[] nums, int target){
+        while(left < right){
+            int mid = left + ((right - left) >> 1);
+            if(nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return left;
+    }
+    //找最后一次出现这个数的index
+    public int upperBound(int left, int right, int[] nums, int target){
+        while(left < right){
+            int mid = left + ((right - left) >> 1);
+            if(nums[mid] <= target)
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return left - 1;
+    }
+}
+```
+
 ## 链表
 
 #### 61 旋转链表
@@ -6396,6 +6495,97 @@ class Solution {
     // }
     public boolean isNum(char c){
         return c >= 48 && c <= 57;
+    }
+}
+```
+
+#### 443 压缩字符串
+
+```
+给定一组字符，使用原地算法将其压缩。
+
+压缩后的长度必须始终小于或等于原数组长度。
+
+数组的每个元素应该是长度为1 的字符（不是 int 整数类型）。
+
+在完成原地修改输入数组后，返回数组的新长度。
+
+ 
+
+进阶：
+你能否仅使用O(1) 空间解决问题？
+
+ 
+
+示例 1：
+
+输入：
+["a","a","b","b","c","c","c"]
+
+输出：
+返回 6 ，输入数组的前 6 个字符应该是：["a","2","b","2","c","3"]
+
+说明：
+"aa" 被 "a2" 替代。"bb" 被 "b2" 替代。"ccc" 被 "c3" 替代。
+示例 2：
+
+输入：
+["a"]
+
+输出：
+返回 1 ，输入数组的前 1 个字符应该是：["a"]
+
+解释：
+没有任何字符串被替代。
+示例 3：
+
+输入：
+["a","b","b","b","b","b","b","b","b","b","b","b","b"]
+
+输出：
+返回 4 ，输入数组的前4个字符应该是：["a","b","1","2"]。
+
+解释：
+由于字符 "a" 不重复，所以不会被压缩。"bbbbbbbbbbbb" 被 “b12” 替代。
+注意每个数字在数组中都有它自己的位置。
+ 
+
+提示：
+
+所有字符都有一个ASCII值在[35, 126]区间内。
+1 <= len(chars) <= 1000。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/string-compression
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：参考的题解，写了半天没写出来，指针的位置没处理好，就多用了空间，题目瞬间就变简单了
+
+```java
+class Solution {
+    public int compress(char[] chars) {
+        int len = chars.length;
+        StringBuffer sb = new StringBuffer();
+        if(len == 0)    return sb.length();
+        int num = 1;
+        for(int i = 0;i < len;i ++){
+            if(i < len - 1 && chars[i] == chars[i + 1]){
+                num++;            
+            }else {
+                if(num == 1){
+                    sb.append(chars[i]);
+                    continue;
+                }
+                sb.append(chars[i]);
+                sb.append(num);
+                num = 1;
+            }
+        }
+        for(int i = 0;i < sb.length();i++){
+            chars[i] = sb.charAt(i);
+        }
+        return sb.length();
     }
 }
 ```
