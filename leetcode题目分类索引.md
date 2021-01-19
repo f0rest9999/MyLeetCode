@@ -216,6 +216,19 @@
 | [1046. 最后一块石头的重量](https://leetcode-cn.com/problems/last-stone-weight/) | 2020-12-30 |  ✅⚪  | ⚡大顶堆的使用 |
 | [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/) |  2021-1-1  | ✅🔵⭐⭐ | ⚡新颖的思维！ |
 
+### 并查集
+
+|                             题目                             |   日期    | 状态 |    备注     |
+| :----------------------------------------------------------: | :-------: | :--: | :---------: |
+| [990. 等式方程的可满足性](https://leetcode-cn.com/problems/satisfiability-of-equality-equations/) | 2020-1-18 |  ❓🔵  |             |
+| [547. 省份数量](https://leetcode-cn.com/problems/number-of-provinces/) | 2020-1-18 |  ✅🔵  |             |
+| [684. 冗余连接](https://leetcode-cn.com/problems/redundant-connection/) | 2020-1-18 |  ✅🔵  |      ⚡      |
+| [765. 情侣牵手](https://leetcode-cn.com/problems/couples-holding-hands/) | 2020-1-18 |  ❓🔴  | ⚡思路很重要 |
+|                                                              |           |      |             |
+|                                                              |           |      |             |
+|                                                              |           |      |             |
+|                                                              |           |      |             |
+
 ### SQL
 
 |                             题目                             |   日期    | 状态 | 备注 |

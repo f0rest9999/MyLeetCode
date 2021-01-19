@@ -4118,7 +4118,7 @@ class Solution {
 - **做题的时候，建议 先画树形图 ，画图能帮助我们想清楚递归结构，想清楚如何剪枝。拿题目中的示例，想一想人是怎么做的，一般这样下来，这棵递归树都不难画出。在画图的过程中思考清楚：**
 
   分支如何产生？
-  题目需要的解在哪里？是在叶子结点、还是在非叶子结点、还是在从跟结点到叶子结点的路径？
+  题目需要的解在哪里？是在叶子结点、还是在非叶子结点、还是在从根结点到叶子结点的路径？
   哪些搜索会产生不需要的解的？例如：产生重复是什么原因，如果在浅层就知道这个分支不能产生需要的结果，应该提前剪枝，剪枝的条件是什么，代码怎么写？
 
 **可以简单的分类为：排列、组合、子集相关问题     Flood Fill    字符串中的回溯问题      游戏问题**
@@ -4189,8 +4189,6 @@ class Solution {
         return resList;
     }
     public void dfs(List<Integer> path, int begin,List<List<Integer>> resList, int[] candidates, int sum, int len){
-        if(sum > target)
-            return;
         if(sum == target){
             resList.add(new ArrayList<>(path));
             return;
@@ -4210,7 +4208,7 @@ class Solution {
 ```
 
 - 再剪枝
-- 加了个target > sum 变快了
+- 加了个sum > target 变快了
 
 ```jaVa
 class Solution {
@@ -5305,7 +5303,7 @@ n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，�
 
   ==注意col的大小就是n，main大小应该是2 * n - 1（因为还包含负数），同理 sub大小也是2 * n - 1==
 
-  - 对于4，main的真实范围是-3 - 3，那么我们对应到数组中的表示应该是n + depth - j - 1
+  - 对于4，main的真实范围是-3 - 3，那么我们对应到数组中的表示应该是n + depth - j - 1（加上个n相当于右移四位能更好的在数组中用下标来表示）
 
 
   - sub的真实范围是0 - 6，对应到数组中的表示就是 j
@@ -5611,6 +5609,40 @@ class Solution {
             }        
         }
         return;
+    }
+}
+```
+
+思路二：三指针
+
+```java
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int len = nums.length;
+        int mindiff = Integer.MAX_VALUE;
+        boolean symbol = false;
+        Arrays.sort(nums);
+        for(int i = 0;i < len - 2;i++){
+            for(int j = i + 1, k = len - 1;j < k;){
+                int sum = nums[i] + nums[j] + nums[k];
+                if(sum > target){
+                    if(mindiff > sum - target){
+                        mindiff = sum - target;
+                        symbol = true;
+                    }
+                    k --;
+                }else if(sum < target){
+                    if(mindiff > target - sum){
+                        mindiff = target - sum;
+                        symbol = false;
+                    }
+                    j ++;
+                }else{
+                    return target;
+                }
+            }
+        }
+        return symbol == true ? target + mindiff : target - mindiff;
     }
 }
 ```
@@ -7197,7 +7229,364 @@ class Solution {
 }
 ```
 
+## 并查集
 
+- **用parent数组实现**
+
+- ==使用并查集来处理不相交集合问题（满足传递性），即实现所有联通的点 都可以找到一个相同的根节点的下标标记==
+
+- 解决两个顶点是否连通的问题，可以用于检测图中是否存在环
+
+- ==**两种压缩方式**==（参考https://leetcode-cn.com/problems/satisfiability-of-equality-equations/solution/shi-yong-bing-cha-ji-chu-li-bu-xiang-jiao-ji-he-we/）
+
+  ![image-20210118155838628](https://gitee.com/f0rest9999/images/raw/master/20210118155845.png)
+
+#### 990 等式方程的可满足性
+
+```
+给定一个由表示变量之间关系的字符串方程组成的数组，每个字符串方程 equations[i] 的长度为 4，并采用两种不同的形式之一："a==b" 或 "a!=b"。在这里，a 和 b 是小写字母（不一定不同），表示单字母变量名。
+
+只有当可以将整数分配给变量名，以便满足所有给定的方程时才返回 true，否则返回 false。 
+
+ 
+
+示例 1：
+
+输入：["a==b","b!=a"]
+输出：false
+解释：如果我们指定，a = 1 且 b = 1，那么可以满足第一个方程，但无法满足第二个方程。没有办法分配变量同时满足这两个方程。
+示例 2：
+
+输入：["b==a","a==b"]
+输出：true
+解释：我们可以指定 a = 1 且 b = 1 以满足满足这两个方程。
+示例 3：
+
+输入：["a==b","b==c","a==c"]
+输出：true
+示例 4：
+
+输入：["a==b","b!=c","c==a"]
+输出：false
+示例 5：
+
+输入：["c==c","b==d","x!=z"]
+输出：true
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/satisfiability-of-equality-equations
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：经典并查集
+
+```java
+class Solution {
+    public boolean equationsPossible(String[] equations) {
+		Union u = new Union(26);
+        for(String s : equations){
+            if(s.charAt(1) == '='){
+                int index1 = s.charAt(0) - 'a';
+                int index2 = s.charAt(3) - 'a';
+                u.union(index1, index2);
+            }
+        }
+        
+        for(String s : equations){
+            if(s.charAt(1) == '!'){
+                int index1 = s.charAt(0) - 'a';
+                int index2 = s.charAt(3) - 'a';
+                if(u.isConnected(index1, index2))
+                    return false;
+            }
+        }
+        return true;
+    }   
+    private class Union{
+        private int[] parent;
+        
+        public Union(int n){
+           	parent = new int [n];
+            for(int i = 0;i < n;i++)
+                parent[i] = i;
+        }
+        
+        public int findParent(int k){
+            while(k != parent[k]){
+                parent[k] = parent[parent[k]];
+                k = parent[k];
+            }
+            return k;
+        }
+        
+        public void union(int x, int y){
+            int rootX = findParent(x);
+            int rootY = findParent(y);
+            parent[rootX] = rootY;
+        }
+        
+        public boolean isConnected(int k, int m){
+            return findParent(k) == findParent(m);
+        }
+    }
+}
+```
+
+#### 547 省份的数量
+
+```
+有 n 个城市，其中一些彼此相连，另一些没有相连。如果城市 a 与城市 b 直接相连，且城市 b 与城市 c 直接相连，那么城市 a 与城市 c 间接相连。
+
+省份 是一组直接或间接相连的城市，组内不含其他没有相连的城市。
+
+给你一个 n x n 的矩阵 isConnected ，其中 isConnected[i][j] = 1 表示第 i 个城市和第 j 个城市直接相连，而 isConnected[i][j] = 0 表示二者不直接相连。
+
+返回矩阵中 省份 的数量。
+
+ 
+
+示例 1：
+
+
+输入：isConnected = [[1,1,0],[1,1,0],[0,0,1]]
+输出：2
+示例 2：
+
+
+输入：isConnected = [[1,0,0],[0,1,0],[0,0,1]]
+输出：3
+ 
+
+提示：
+
+1 <= n <= 200
+n == isConnected.length
+n == isConnected[i].length
+isConnected[i][j] 为 1 或 0
+isConnected[i][i] == 1
+isConnected[i][j] == isConnected[j][i]
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/number-of-provinces
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+​                                           ![image-20210118173010624](https://gitee.com/f0rest9999/images/raw/master/20210118173010.png)![image-20210118173025849](https://gitee.com/f0rest9999/images/raw/master/20210118173025.png)
+
+思路：最后再统一一下parent的表示，即所有的都变成彻底压缩路径
+
+- ==小tips：在使用**彻底路径压缩**的情况下，我们使用一个循环就可以判断出总的连通分支的个数，即==
+
+  ```java
+   for(int i = 0;i < parent.length;i++){
+   	if(i == u.findParent(i))
+   		res ++;
+   }
+  ```
+
+```java
+class Solution {
+    public int findCircleNum(int[][] M) {
+		int len = M.length;
+        if(len <= 1)	return 1;
+        Union u = new Union(len);
+        int res = 0;
+        for(int i = 0;i < len;i++){
+            for(int j = i + 1;j < len;j++){
+                if(M[i][j] == 1){
+                    u.union(i, j);
+                }
+            }
+        }
+        int[] temp = u.returnArray();
+        for(int i = 0;i < temp.length;i++){
+            if(i == u.findParent(i))
+                res ++;
+        }
+        return res;
+    }
+    
+    private class Union{
+        private int[] parent;
+        
+        public Union(int n){
+            parent = new int [n];
+        	for(int i = 0;i < n;i++)
+                parent[i] = i;
+        }
+        
+        public int findParent(int k){
+            if(parent[k] != k)
+                parent[k] = findParent(parent[k]);
+        	return parent[k];
+        }
+        public void union(int x, int y){
+            //int rootX = findParent(x);
+            //int rootY = findParent(y);
+            //parent[rootX] = rootY;
+            parent[findParent(x)] = findParent(y);
+        }
+        public int[] returnArray(){
+            return parent;
+        }
+    }
+}
+```
+
+####684 冗余连接
+
+```
+在本问题中, 树指的是一个连通且无环的无向图。
+
+输入一个图，该图由一个有着N个节点 (节点值不重复1, 2, ..., N) 的树及一条附加的边构成。附加的边的两个顶点包含在1到N中间，这条附加的边不属于树中已存在的边。
+
+结果图是一个以边组成的二维数组。每一个边的元素是一对[u, v] ，满足 u < v，表示连接顶点u 和v的无向图的边。
+
+返回一条可以删去的边，使得结果图是一个有着N个节点的树。如果有多个答案，则返回二维数组中最后出现的边。答案边 [u, v] 应满足相同的格式 u < v。
+
+示例 1：
+
+输入: [[1,2], [1,3], [2,3]]
+输出: [2,3]
+解释: 给定的无向图为:
+  1
+ / \
+2 - 3
+示例 2：
+
+输入: [[1,2], [2,3], [3,4], [1,4], [1,5]]
+输出: [1,4]
+解释: 给定的无向图为:
+5 - 1 - 2
+    |   |
+    4 - 3
+注意:
+
+输入的二维数组大小在 3 到 1000。
+二维数组中的整数在1到N之间，其中N是输入数组的大小。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/redundant-connection
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：可以通过并查集寻找附加的边。初始时，每个节点都属于不同的连通分量。遍历每一条边，判断这条边连接的两个顶点是否属于相同的连通分量。如果两个顶点属于不同的连通分量，则说明在遍历到当前的边之前，这两个顶点之间不连通，因此当前的边不会导致环出现，合并这两个顶点的连通分量。如果两个顶点属于相同的连通分量，则说明在遍历到当前的边之前，这两个顶点之间已经连通，因此当前的边导致环出现，为附加的边，将当前的边作为答案返回。
+
+```java
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        int[] res = new int[2];
+        Union u = new Union(edges.length);
+        for(int[] arr : edges){
+            if(u.findParent(arr[0]) != u.findParent(arr[1])){
+                u.connect(arr[0], arr[1]);
+            }else{
+                res = arr;
+                break;
+            }
+        }
+        return res;
+    }
+    private class Union{
+        private int[] parent;
+
+        public Union(int n){
+            parent = new int[n + 1];
+            for(int i = 1;i <= n;i++)
+                parent[i] = i;    
+        } 
+
+        public int findParent(int x){
+            if(x != parent[x])
+                parent[x] = findParent(parent[x]);
+            return parent[x];
+        }
+
+        public void connect(int x, int y){
+            parent[findParent(x)] = findParent(y);
+        }
+    }
+}
+```
+
+#### 765 情侣牵手
+
+```
+N 对情侣坐在连续排列的 2N 个座位上，想要牵到对方的手。 计算最少交换座位的次数，以便每对情侣可以并肩坐在一起。 一次交换可选择任意两人，让他们站起来交换座位。
+
+人和座位用 0 到 2N-1 的整数表示，情侣们按顺序编号，第一对是 (0, 1)，第二对是 (2, 3)，以此类推，最后一对是 (2N-2, 2N-1)。
+
+这些情侣的初始座位  row[i] 是由最初始坐在第 i 个座位上的人决定的。
+
+示例 1:
+
+输入: row = [0, 2, 1, 3]
+输出: 1
+解释: 我们只需要交换row[1]和row[2]的位置即可。
+示例 2:
+
+输入: row = [3, 2, 0, 1]
+输出: 0
+解释: 无需交换座位，所有的情侣都已经可以手牵手了。
+说明:
+
+len(row) 是偶数且数值在 [4, 60]范围内。
+可以保证row 是序列 0...len(row)-1 的一个全排列。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/couples-holding-hands
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+思路：参考题解
+
+![image-20210118213238263](https://gitee.com/f0rest9999/images/raw/master/20210118213238.png)
+
+```java
+class Solution {
+    public int minSwapsCouples(int[] row) {
+		int len = row.length;
+    	int res = len / 2;
+        Union u = new Union(len);
+        for(int i = 0;i < len;i += 2){
+            u.union(row[i], row[i + 1]);
+        }
+        int[] unionRes = u.returnArray();
+        for(int i = 0;i < len;i++){
+            if(i == u.findParent(i))
+                res --;
+        }
+        return res;
+    }
+    private class Union{
+        private int[] parent;
+        
+        public Union(int k){
+            parent = new int[k];
+            for(int i = 0;i < k;i += 2){
+                parent[i] = i;
+                parent[i + 1] = i;
+            }
+        }
+        
+        public int findParent(int x){
+            if(x != parent[x])
+                parent[x] = findParent(parent[x]);
+           	return parent[x];
+        }
+        
+        public void union(int x, int y){
+            int rootX = findParent(x);
+            int rootY = findParent(y);
+            parent[rootY] = rootX;
+        }
+        
+        public int[] returnArray(){
+            return parent;
+        }
+    }
+}
+```
 
 ## SQL
 
