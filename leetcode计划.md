@@ -1,4 +1,31 @@
-#LeetCode题目索引
+#LeetCode总结及复习计划
+
+![image-20201214145325944](https://gitee.com/f0rest9999/images/raw/master/20201214145326.png)
+
+```
+12-14留念
+```
+
+```markdown
+**300道题留念，以后佛系复习了，不能一天做好多道了,9月15开始做的，到11月9号，54天，平均每天5.5道，好像有点多了哈哈，前期比较艰难，基本看题解的比较多，后期自己能做出来一些中等题了，感觉进步肯定是有的，在想如果本科生的时候就开始刷，或许现在也是个算法小生了吧，但是没有后悔药，我也不想吃。
+十月份坚持了每天打卡刷那个题，拿了个勋章，就是为了告诉自己其实坚持并不是太难的事儿。
+（深绿色的格子也不知道当天经历了什么，啥也没干就刷题了，不然怎么提交了这么多次哈哈）
+这段多复习吧，有些题当时掌握的就不好。每天复习一到两个题就可以，二刷找优解，吃透。
+每周周末可以做4-5道新的题（最好是中等），保持思维和手感。
+准备按以下线路复习：
+动态规划（好久没做动态规划的题了，有些忘记了）
+二叉树（主要可以练习递归，递归有时候能很快写出来，有时候想半天想不通，把做过的题总结一下）链表（基本也是递归，可见递归的地位）
+递归（N后问题 等经典问题，忘记了）
+回溯（基本回溯的题，没有自己做出来的，二刷要像学新知识一样）
+图（题目并不多，大部分也涉及递归）
+贪心（好像做的题也不多）
+位运算（有些题的解法比较tricky，自己想不容易想出来，多复习就好，没有特别的难算法）
+滑动窗口（题目较少，可以多做点新题，二刷要像学新知识一样）
+堆（几个题目，但是感觉挺经典）
+二分查找（这个边界有点烦）
+并查集（不算是重点，把做过题复习一下就好）
+设计题（复习一遍就行，不再上代码做了就）
+```
 
 ✅:复习时候有思路且正确
 
@@ -107,9 +134,9 @@
 | [120. 三角形最小路径和](https://leetcode-cn.com/problems/triangle/) | 2020-12-11 |  ✅🔵  |       ⚡一次AC        |
 | [面试题 01.05. 一次编辑](https://leetcode-cn.com/problems/one-away-lcci/) | 2020-12-12 |  ❓🔵  |          ⚡           |
 | [91. 解码方法](https://leetcode-cn.com/problems/decode-ways/) | 2020-12-16 |  ❌🔵  |          ⚡           |
-| [801. 使序列递增的最小交换次数](https://leetcode-cn.com/problems/minimum-swaps-to-make-sequences-increasing/) | 2020-12-19 | ❌🔵⭐  |       ⚡有难度        |
-| [131. 分割回文串](https://leetcode-cn.com/problems/palindrome-partitioning/) | 2020-12-22 | ❓🔵⭐  |   ⚡用DP来优化回溯    |
-| [279. 完全平方数](https://leetcode-cn.com/problems/perfect-squares/) | 2020-12-22 |  ✅🔵  |    ⚡应该有更优解     |
+|                                                              |            |      |                      |
+|                                                              |            |      |                      |
+|                                                              |            |      |                      |
 |                                                              |            |      |                      |
 |                                                              |            |      |                      |
 |                                                              |            |      |                      |
@@ -132,16 +159,16 @@
 
 ### 二分查找
 
-|                             题目                             |    日期    | 状态 | 备注  |
-| :----------------------------------------------------------: | :--------: | :--: | :---: |
-| [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 2020-12-2  | ❓🔵⭐  |   ⚡   |
-| [74. 搜索二维矩阵](https://leetcode-cn.com/problems/search-a-2d-matrix/) | 2020-12-18 |  ❓🔵  |   ⚡   |
-| [1712. 将数组分成三个子数组的方案数](https://leetcode-cn.com/problems/ways-to-split-array-into-three-subarrays/) |  2021-1-9  | ❓🔵⭐⭐ | ⚡好题 |
-|                                                              |            |      |       |
-|                                                              |            |      |       |
-|                                                              |            |      |       |
-|                                                              |            |      |       |
-|                                                              |            |      |       |
+|                             题目                             |   日期    | 状态 | 备注 |
+| :----------------------------------------------------------: | :-------: | :--: | :--: |
+| [ 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array) | 2020-12-2 | ❓🔵⭐  |  ⚡   |
+|                                                              |           |      |      |
+|                                                              |           |      |      |
+|                                                              |           |      |      |
+|                                                              |           |      |      |
+|                                                              |           |      |      |
+|                                                              |           |      |      |
+|                                                              |           |      |      |
 
 ### 链表
 
@@ -182,39 +209,24 @@
 |   [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)   | 2020-12-14 | ❌🔴⭐⭐⭐ |       N后问题       |
 | [37. 解数独](https://leetcode-cn.com/problems/sudoku-solver/) | 2020-12-14 |  ❌🔴⭐  |          ⚡          |
 | [40. 组合总和 II](https://leetcode-cn.com/problems/combination-sum-ii/) | 2020-12-16 |  ✅🔵⭐  |          ⚡          |
-| [16. 最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/) | 2020-12-17 |  ✅🔵   |          ⚡          |
-| [526. 优美的排列](https://leetcode-cn.com/problems/beautiful-arrangement/) | 2020-12-25 |  ✅🔵   |          ⚡          |
-| [784. 字母大小写全排列](https://leetcode-cn.com/problems/letter-case-permutation/) | 2020-12-25 |  ✅🔵   |          ⚡          |
-| [797. 所有可能的路径](https://leetcode-cn.com/problems/all-paths-from-source-to-target/) | 2020-12-26 |  ✅🔵   |          ⚡          |
-| [967. 连续差相同的数字](https://leetcode-cn.com/problems/numbers-with-same-consecutive-differences/) | 2020-12-26 |  ✅🔵   |          ⚡          |
-| [1079. 活字印刷](https://leetcode-cn.com/problems/letter-tile-possibilities/) | 2020-12-26 |  ✅🔵   |          ⚡          |
-| [1219. 黄金矿工](https://leetcode-cn.com/problems/path-with-maximum-gold/) | 2020-12-26 |  ✅🔵   |          ⚡          |
+|                                                              |            |       |                     |
+|                                                              |            |       |                     |
+|                                                              |            |       |                     |
 
-### 字符串
 
-|                             题目                             |    日期    | 状态 |        备注         |
-| :----------------------------------------------------------: | :--------: | :--: | :-----------------: |
-| [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/) | 2020-12-22 | ✅⚪⭐  |        ⚡KMP⭐        |
-| [179. 最大数](https://leetcode-cn.com/problems/largest-number/) | 2020-12-23 | ❓🔵⭐  | ⚡Comparator排序技巧 |
-| [125. 验证回文串](https://leetcode-cn.com/problems/valid-palindrome/) | 2020-12-26 |  ✅⚪  |   ⚡ASCii码的范围    |
-| [443. 压缩字符串](https://leetcode-cn.com/problems/string-compression/) |  2021-1-9  |  ❌🔵  |  ⚡写了半天没写出来  |
-|                                                              |            |      |                     |
-|                                                              |            |      |                     |
-|                                                              |            |      |                     |
-|                                                              |            |      |                     |
 
-### 数组和矩阵
+### 数组
 
-|                             题目                             |    日期    | 状态 |     备注      |
-| :----------------------------------------------------------: | :--------: | :--: | :-----------: |
-| [204. 计数质数](https://leetcode-cn.com/problems/count-primes/) | 2020-12-3  |  ✅⚪  | 厄拉多塞筛法  |
-| [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 2020-12-16 |  ❓🔵  | 排序API练习⚡  |
-| [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/) | 2020-12-16 |  ✅🔵  |       ⚡       |
-| [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/) | 2020-12-17 |  ❓🔵  |     ⚡妙啊     |
-| [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/) | 2020-12-18 |  ✅🔵  |     ⚡妙啊     |
-| [1664. 生成平衡数组的方案数](https://leetcode-cn.com/problems/ways-to-make-a-fair-array/) | 2020-12-21 | ❌🔵⭐  |  ⚡前缀和问题  |
-| [1046. 最后一块石头的重量](https://leetcode-cn.com/problems/last-stone-weight/) | 2020-12-30 |  ✅⚪  | ⚡大顶堆的使用 |
-| [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/) |  2021-1-1  | ✅🔵⭐⭐ | ⚡新颖的思维！ |
+|                             题目                             |    日期    | 状态 |     备注     |
+| :----------------------------------------------------------: | :--------: | :--: | :----------: |
+| [204. 计数质数](https://leetcode-cn.com/problems/count-primes/) | 2020-12-3  |  ✅⚪  | 厄拉多塞筛法 |
+| [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 2020-12-16 |  ❓🔵  | 排序API练习⚡ |
+| [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/) | 2020-12-16 |  ✅🔵  |      ⚡       |
+|                                                              |            |      |              |
+|                                                              |            |      |              |
+|                                                              |            |      |              |
+|                                                              |            |      |              |
+|                                                              |            |      |              |
 
 ### SQL
 
@@ -244,23 +256,22 @@
 
 ### 位运算
 
-|                             题目                             | 日期  | 状态 |       备注       |
-| :----------------------------------------------------------: | :---: | :--: | :--------------: |
-| [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/) | 12-23 |  ✅⚪  |                  |
-| [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/) | 12-23 |  ❌🔵  |  没看太懂......  |
-| [169. 多数元素](https://leetcode-cn.com/problems/majority-element/) | 12-23 |  ❓⚪  |   摩尔投票法⭐    |
-| [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/) | 12-23 |  ✅⚪  |                  |
-| [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/) | 12-23 |  ✅⚪  |                  |
-| [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/) | 12-23 |  ❓🔵  |                  |
-| [268. 丢失的数字](https://leetcode-cn.com/problems/missing-number/) | 12-23 |  ❓⚪  |       秒啊       |
-| [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/) | 12-23 |  ❓⚪  |        ⭐         |
-| [342. 4的幂](https://leetcode-cn.com/problems/power-of-four/) | 12-23 |  ❓⚪  |       秒啊       |
-| [389. 找不同](https://leetcode-cn.com/problems/find-the-difference/) | 12-23 |  ✅⚪  | char类型也可以用 |
-| [461. 汉明距离](https://leetcode-cn.com/problems/hamming-distance/) | 12-23 |  ✅⚪  |                  |
-| [476. 数字的补数](https://leetcode-cn.com/problems/number-complement/) | 12-23 |  ❓⚪  |                  |
-| [693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/) | 12-23 |  ❓⚪  |                  |
-| [1342. 将数字变成 0 的操作次数](https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero/) | 12-23 |  ✅⚪  |                  |
-| [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/) | 12-23 |  ✅⚪  |                  |
-| [剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/) | 12-23 |  ✅⚪  |                  |
-| [面试题 17.04. 消失的数字](https://leetcode-cn.com/problems/missing-number-lcci/) | 12-23 |  ✅⚪  |                  |
+|                             题目                             | 日期 | 状态 | 备注 |
+| :----------------------------------------------------------: | :--: | :--: | :--: |
+| [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/) |      |  ⚪   | 没做 |
+| [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/) |      |  🔵   | 没做 |
+| [169. 多数元素](https://leetcode-cn.com/problems/majority-element/) |      |  ⚪   | 没做 |
+| [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/) |      |  ⚪   | 没做 |
+| [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/) |      |  ⚪   | 没做 |
+| [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/) |      |  🔵   | 没做 |
+| [268. 丢失的数字](https://leetcode-cn.com/problems/missing-number/) |      |  ⚪   | 没做 |
+| [342. 4的幂](https://leetcode-cn.com/problems/power-of-four/) |      |  ⚪   | 没做 |
+| [389. 找不同](https://leetcode-cn.com/problems/find-the-difference/) |      |  ⚪   | 没做 |
+| [461. 汉明距离](https://leetcode-cn.com/problems/hamming-distance/) |      |  ⚪   | 没做 |
+| [476. 数字的补数](https://leetcode-cn.com/problems/number-complement/) |      |  ⚪   | 没做 |
+| [693. 交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/) |      |  ⚪   | 没做 |
+| [1342. 将数字变成 0 的操作次数](https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero/) |      |  ⚪   | 没做 |
+| [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/) |      |  ⚪   | 没做 |
+| [剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/) |      |  ⚪   | 没做 |
+| [面试题 17.04. 消失的数字](https://leetcode-cn.com/problems/missing-number-lcci/) |      |  ⚪   | 没做 |
 
